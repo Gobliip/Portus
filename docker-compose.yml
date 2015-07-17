@@ -11,3 +11,12 @@ web:
     - db
   volumes:
    - ./vagrant/conf/ca_bundle/:/portus/vagrant/conf/ca_bundle/
+registry:
+  image: registry:2.0.1
+  volumes:
+    - ./config.yml:/go/src/github.com/docker/distribution/cmd/registry/config.yml
+    - ./vagrant/conf/ca_bundle/:/ca_bundle/
+  ports:
+    - "5000:5000"
+  links:
+    - web:portus
