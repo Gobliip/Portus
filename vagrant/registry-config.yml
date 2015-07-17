@@ -1,0 +1,41 @@
+version: 0.1
+log:
+  level: debug
+  fields:
+    service: registry
+    environment: development
+storage:
+    cache:
+        layerinfo: inmemory
+    filesystem:
+        rootdirectory: /tmp/registry-dev
+    maintenance:
+        uploadpurging:
+            enabled: false
+http:
+    addr: :5000
+    secret: asecretforlocaldevelopment
+    debug:
+        addr: localhost:5001
+auth:
+  token:
+    realm: http://portus:3000/v2/token
+    service: registry.test.lan:5000
+    issuer: portus.test.lan
+    rootcertbundle: /ca_bundle/server.crt
+redis:
+  addr: localhost:6379
+  pool:
+    maxidle: 16
+    maxactive: 64
+    idletimeout: 300s
+  dialtimeout: 10ms
+  readtimeout: 10ms
+  writetimeout: 10ms
+notifications:
+    endpoints:
+        - name: portus
+          url: http://portus:3000/v2/webhooks/events/
+          timeout: 1s
+          threshold: 10
+          backoff: 1s

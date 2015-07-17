@@ -13,10 +13,12 @@ web:
    - ./vagrant/conf/ca_bundle/:/portus/vagrant/conf/ca_bundle/
 registry:
   image: registry:2.0.1
+  environment:
+    REGISTRY_AUTH_TOKEN_REALM: http://192.168.99.100:3000/v2/token
+    REGISTRY_AUTH_TOKEN_SERVICE: registry.test.lan:5000
+    REGISTRY_AUTH_ISSUER: portus.test.lan
+    REGISTRY_AUTH_TOKEN_REALM: /ca_bundle/server.crt
   volumes:
-    - ./config.yml:/go/src/github.com/docker/distribution/cmd/registry/config.yml
     - ./vagrant/conf/ca_bundle/:/ca_bundle/
   ports:
     - "5000:5000"
-  links:
-    - web:portus
