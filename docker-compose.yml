@@ -9,3 +9,5 @@ web:
     - "3000:3000"
   links:
     - db
+  volumes:
+   - ./vagrant/conf/ca_bundle/:/portus/vagrant/conf/ca_bundle/
